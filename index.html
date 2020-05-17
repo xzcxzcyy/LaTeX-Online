@@ -1,0 +1,94 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css">
+    <script src="https://cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaTeX Online</title>
+    <script type="text/javascript">
+        function PageReload() {
+            window.location.reload()
+        }
+    </script>
+</head>
+
+
+
+<body class="mdui-theme-primary-red mdui-theme-accent-blue-accent
+     mdui-appbar-with-toolbar mdui-drawer-body-left">
+    <!-- mdui-theme-layout-dark-->
+    <div class="mdui-appbar mdui-appbar-fixed">
+        <div class="mdui-toolbar mdui-color-theme">
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#left-drawer'}">
+                <i class="mdui-icon material-icons">menu</i>
+            </a>
+            <a href="./index.html" class="mdui-typo-title">LaTeX Online</a>
+            <div class="mdui-toolbar-spacer"></div>
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '刷新'}" onclick="PageReload()">
+                <i class="mdui-icon material-icons">refresh</i>
+            </a>
+        </div>
+
+    </div>
+
+    <div class="mdui-drawer" id="left-drawer">
+        <ul class="mdui-list">
+            <li class="mdui-list-item mdui-ripple mdui-list-item-active">
+                <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-red">home</i>
+                <div class="mdui-list-item-content">主页</div>
+            </li>
+            <a href="./about/index.html" class="mdui-list-item mdui-ripple">
+                <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue-a200">info</i>
+                <div class="mdui-list-item-content">关于</div>
+            </a>
+        </ul>
+    </div>
+
+    <div class="mdui-container mdui-p-t-5 mdui-p-b-5">
+        <div class="mdui-row">
+            <div class="mdui-col-xs-11">
+                <div class="mdui-card mdui-m-t-2 mdui-m-b-2 mdui-shadow-5 mdui-hoverable">
+                    <div class="mdui-card-content">
+                        <div class="mdui-col-xs-9">
+                            <div class="mdui-textfield mdui-textfield-floating-label">
+                                <label class="mdui-textfield-label">Type your LaTeX formula here</label>
+                                <textarea class="mdui-textfield-input" , id="formula"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="mdui-col-xs-2">
+                            <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" ,
+                                id="btn">渲染</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mdui-row">
+            <div class="mdui-col-xs-11">
+                <div class="mdui-card mdui-m-t-2 mdui-m-b-2 mdui-shadow-5 mdui-hoverable">
+                    <div class="mdui-card-content">
+                        <p id="display"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    var mdjq = mdui.JQ;
+
+    mdjq('#btn').on('click', function (e) {
+        mdjq('#display').text('\\[' + mdjq('#formula').val() + '\\]');
+        MathJax.typeset()
+    });
+</script>
+
+</html>
