@@ -1,8 +1,9 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css">
-    <script src="https://cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
+    <link rel="stylesheet" href="./css/mdui.css">
+    <link rel="stylesheet" href="./css/jquery.fullpage.css">
+    <script src="./js/mdui.js"></script>
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -19,7 +20,7 @@
 
 
 
-<body class="mdui-theme-primary-red mdui-theme-accent-blue-accent
+<body class="mdui-theme-primary-teal mdui-theme-accent-pink-accent
      mdui-appbar-with-toolbar mdui-drawer-body-left">
     <!-- mdui-theme-layout-dark-->
     <div class="mdui-appbar mdui-appbar-fixed">
@@ -62,8 +63,8 @@
                         </div>
 
                         <div class="mdui-col-xs-2">
-                            <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" ,
-                                id="btn">渲染</button>
+                            <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-pink-accent" ,
+                                id="btn">刷新公式</button>
                         </div>
                     </div>
                 </div>
@@ -86,8 +87,15 @@
     var mdjq = mdui.JQ;
 
     mdjq('#btn').on('click', function (e) {
+        //console.log('onclick called');
         mdjq('#display').text('\\[' + mdjq('#formula').val() + '\\]');
-        MathJax.typeset()
+        MathJax.typeset();
+    });
+
+    mdjq('#formula').on('change focus input', function (e) {
+        //console.log('onchange called');
+        mdjq('#display').text('\\[' + mdjq('#formula').val() + '\\]');
+        MathJax.typeset();
     });
 </script>
 
