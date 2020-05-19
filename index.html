@@ -6,7 +6,27 @@
     <script src="./js/mdui.js"></script>
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        MathJax.Hub.Queue(function () {
+            // Fix <code> tags after MathJax finishes running. This is a
+            // hack to overcome a shortcoming of Markdown. Discussion at
+            // https://github.com/mojombo/jekyll/issues/199
+            var all = MathJax.Hub.getAllJax(), i;
+            for (i = 0; i < all.length; i += 1) {
+                all[i].SourceElement().parentNode.className += ' has-jax';
+            }
+        });
+    </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,16 +75,27 @@
             <div class="mdui-col-xs-11">
                 <div class="mdui-card mdui-m-t-2 mdui-m-b-2 mdui-shadow-5 mdui-hoverable">
                     <div class="mdui-card-content">
-                        <div class="mdui-col-xs-9">
-                            <div class="mdui-textfield mdui-textfield-floating-label">
-                                <label class="mdui-textfield-label">Type your LaTeX formula here</label>
-                                <textarea class="mdui-textfield-input" , id="formula"></textarea>
+                        <div class="mdui-col-xs-12">
+                            <div class="mdui-tab" mdui-tab>
+                                <a href="#example1-tab1" class="mdui-ripple">仅公式</a>
+                                <a href="#example1-tab2" class="mdui-ripple">公式/文字混输</a>
                             </div>
-                        </div>
-
-                        <div class="mdui-col-xs-2">
-                            <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-pink-accent" ,
-                                id="btn">刷新公式</button>
+                            <div id="example1-tab1" class="mdui-p-a-2">
+                                <div class="mdui-textfield mdui-textfield-floating-label">
+                                    <label class="mdui-textfield-label">直接键入公式...</label>
+                                    <textarea class="mdui-textfield-input" , id="formula"></textarea>
+                                </div>
+                                <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-pink-accent"
+                                    id="btn">刷新公式</button>
+                            </div>
+                            <div id="example1-tab2" class="mdui-p-a-2">
+                                <div class="mdui-textfield mdui-textfield-floating-label">
+                                    <label class="mdui-textfield-label">支持公式/文字混输...</label>
+                                    <textarea class="mdui-textfield-input" , id="mix"></textarea>
+                                </div>
+                                <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-pink-accent"
+                                    id="btn2">重新渲染</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -95,6 +126,18 @@
     mdjq('#formula').on('change focus input', function (e) {
         //console.log('onchange called');
         mdjq('#display').text('\\[' + mdjq('#formula').val() + '\\]');
+        MathJax.typeset();
+    });
+
+    mdjq('#btn2').on('click', function (e) {
+        //console.log('mix: onclick called');
+        mdjq('#display').text(mdjq('#mix').val());
+        MathJax.typeset();
+    });
+
+    mdjq('#mix').on('change focus input', function (e) {
+        //console.log('mix: onchange called');
+        mdjq('#display').text(mdjq('#mix').val());
         MathJax.typeset();
     });
 </script>
